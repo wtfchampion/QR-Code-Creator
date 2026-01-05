@@ -18,12 +18,12 @@ BoxLayout:
 
     MDTextField:
         id: input_text
-        hint_text: "متن یا لینک خود را وارد کنید"
+        hint_text: "Enter text or link"
         mode: "fill"
         multiline: False
 
     MDRaisedButton:
-        text: "ساخت QR Code"
+        text: "Generate QR Code"
         on_release: app.generate_qr()
 
     FitImage:
@@ -34,11 +34,14 @@ BoxLayout:
 
 class QRCodeApp(MDApp):
     def build(self):
+        """Build and return the main application UI"""
         return Builder.load_string(KV)
 
     def generate_qr(self):
+        """Generate QR code from input text and display it"""
         text = self.root.ids.input_text.text.strip()
         if text:
+            # Create QR code instance
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -48,17 +51,25 @@ class QRCodeApp(MDApp):
             qr.add_data(text)
             qr.make(fit=True)
 
+            # Convert to image and save
             qr_array = np.array(qr.make_image(fill="black", back_color="white"))
             qr_path = "qr_code.png"
             cv2.imwrite(qr_path, qr_array * 255)
 
+            # Update the image widget
             self.root.ids.qr_image.source = qr_path
             self.root.ids.qr_image.reload()
+        else:
+            # Show error message if input is empty
+            print("Error: Input field is empty!")
 
 if __name__ == "__main__":
     app = QRCodeApp()
     app.run()
 
-    # بعد از اجرای برنامه، فایل APK ساخته شود
-    print("📦 برنامه اجرا شد. در حال ساخت APK...")
-    subprocess.run(["python", "build.py"], check=True)
+    # After app execution, build APK (optional)
+    print("📦 Application finished. Building APK...")
+    try:
+        subprocess.run(["python", "build.py"], check=True)
+    except FileNotFoundError:
+        print("build.py not found. APK build skipped.")
