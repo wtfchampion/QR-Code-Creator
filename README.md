@@ -1,4 +1,3 @@
-@ -1,2 +1,21 @@
 # QR Code Creator
 this code can make qr code with text 
 # QR Code Generator
@@ -18,5 +17,5 @@ in telegram : @champ_studio
 
 1. Clone this repository:
    ```bash
-   git clone &lt;https://github.com/wtfchampion/QR-Code-Creator.git&gt;
+   git clone https://github.com/wtfchampion/QR-Code-Creator.git
    cd qr-code-generator
