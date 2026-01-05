@@ -1,0 +1,6 @@
+kivy==2.3.0
+kivymd==1.1.1
+qrcode==7.4.2
+numpy==1.24.3
+opencv-python==4.8.0.74
+Pillow==10.0.0
